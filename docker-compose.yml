@@ -1,0 +1,27 @@
+services:
+  db:
+    container_name: mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD : 123456
+      MYSQL_DATABASE: youcoderecruitment
+    volumes:
+      - db_volumes:/var/lib/mysql
+    ports:
+      - 3307:3306
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8000:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=123456
+    depends_on:
+      - db
+volumes:
+  db_volumes:
