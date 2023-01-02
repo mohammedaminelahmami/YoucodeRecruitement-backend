@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class UserParentClass {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
