@@ -15,6 +15,8 @@ import java.util.List;
 @Table(name = "candidate", catalog = "youcoderecruitment")
 public class CandidateEntity extends UserParentClass {
 
+    private String email;
+
     @OneToMany(mappedBy = "candidate")
     private List<Notification> notifications;
 
