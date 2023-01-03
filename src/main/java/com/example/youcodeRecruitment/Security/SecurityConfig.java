@@ -75,6 +75,7 @@ public class SecurityConfig {
         return new UserDetailsService(){
             @Override
             public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
                 return userDao.findUserByEmail(email);
             }
         };

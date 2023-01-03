@@ -27,5 +27,4 @@ public class Document {
     @OneToMany(mappedBy = "document")
     private List<Comment> comments;
 
-
 }
