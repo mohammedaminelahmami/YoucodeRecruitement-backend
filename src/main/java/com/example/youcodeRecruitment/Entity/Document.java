@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,10 +22,11 @@ public class Document {
     private Type type;
 
     @ManyToOne
-    private CandidateEntity candidate;
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
 
     @OneToMany(mappedBy = "document")
-    private List<Comment> comments;
+    private Set<Comment> commentEntities;
 
 
 }

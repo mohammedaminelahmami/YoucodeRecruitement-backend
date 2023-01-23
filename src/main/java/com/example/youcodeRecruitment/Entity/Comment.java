@@ -18,8 +18,10 @@ public class Comment {
     private String body;
 
     @ManyToOne
-    private HREntity hr;
+    @JoinColumn(name = "hr_id")
+    private HR hr;
 
     @ManyToOne
+    @JoinColumn(name = "document_id")
     private Document document;
 }
