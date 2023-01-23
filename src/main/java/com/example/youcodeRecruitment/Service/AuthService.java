@@ -22,6 +22,7 @@ import java.util.HashMap;
 
 @Service
 @RequiredArgsConstructor
+@SuppressWarnings("Duplicates")
 public class AuthService {
     private final JwtUtils jwtUtil;
     private final AuthenticationManager authenticationManager;
@@ -32,8 +33,8 @@ public class AuthService {
     private final IMapperDto<RegisterRequest, Candidate> mapperDtoCandidate;
     private final IMapperDto<RegisterRequest, HR> mapperDtoHR;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    public ResponseEntity<HashMap<String, String>> login(AuthRequest authRequest) {
 
+    public ResponseEntity<HashMap<String, String>> login(AuthRequest authRequest) {
         Admin admin = adminRepository.findByEmail(authRequest.getEmail()).orElse(null);
         if (admin != null) {
             HashMap<String, String> responseToken = new HashMap<>();
