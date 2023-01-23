@@ -27,5 +27,6 @@ public class Skills {
     private String outil_skills;
 
     @OneToOne
-    private CandidateEntity candidate;
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
 }

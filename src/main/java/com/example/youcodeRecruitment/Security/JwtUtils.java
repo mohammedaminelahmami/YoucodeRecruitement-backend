@@ -43,18 +43,19 @@ public class JwtUtils {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails, int id){
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userDetails);
+        return createToken(claims, userDetails, id);
     }
 
-    private String createToken(Map<String, Object> claims, UserDetails userDetails){
+    private String createToken(Map<String, Object> claims, UserDetails userDetails, int id){
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
+                .claim("id", id)
                 .claim("authorities", userDetails.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
+                .setExpiration(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(60)))
                 .signWith(SignatureAlgorithm.HS256, jwtSigningKey).compact();
     }
 

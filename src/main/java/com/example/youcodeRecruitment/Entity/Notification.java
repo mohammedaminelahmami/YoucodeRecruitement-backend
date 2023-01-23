@@ -18,7 +18,8 @@ public class Notification {
     private String message;
 
     @ManyToOne
-    private CandidateEntity candidate;
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
 
 
 }

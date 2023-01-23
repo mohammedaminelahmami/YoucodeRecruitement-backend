@@ -24,4 +24,7 @@ public abstract class UserParentClass {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "image")
+    private String image;
 }
