@@ -17,6 +17,12 @@ public class Comment {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private String created_at;
+
+    @Column(name = "updated_at", updatable = false , insertable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private String updated_at;
+
     @ManyToOne
     @JoinColumn(name = "hr_id")
     private HR hr;
