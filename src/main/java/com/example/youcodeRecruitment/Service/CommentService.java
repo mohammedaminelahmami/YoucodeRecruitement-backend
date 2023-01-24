@@ -25,7 +25,6 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final DocumentRepository documentRepository;
     private final HRRepository hrRepository;
-    private final IMapperDto<CommentRequest, Comment> mapper;
     private final IMapperDto<CommentDTO, Comment> mapperDTO;
     private final IMapperDto<HRDTO, HR> mapperHrDTO;
     private final IMapperDto<DocumentDTO, Document> mapperDocumentDTO;
@@ -36,15 +35,18 @@ public class CommentService {
 
         CommentDTO commentDTO = new CommentDTO();
 
-        BeanUtils.copyProperties(commentRequest, commentDTO);
-
         if(hr.isPresent() && document.isPresent()) {
             HRDTO hrdto = mapperHrDTO.convertToDTO(hr.get(), HRDTO.class); // map hr to hrDTO
             DocumentDTO documentDTO = mapperDocumentDTO.convertToDTO(document.get(), DocumentDTO.class); // map document to documentDTO
 
             commentDTO.setHr(hrdto);
             commentDTO.setDocument(documentDTO);
+
+        }else{
+            throw new RuntimeException("HR or Document not found");
         }
+
+        BeanUtils.copyProperties(commentRequest, commentDTO);
 
         Comment comment = mapperDTO.convertToEntity(commentDTO, Comment.class);
         if(comment != null) {
@@ -84,8 +86,13 @@ public class CommentService {
 
     public List<CommentDTO> getAllCommentsById(Long id, int page, int limit) {
         if(page > 0) page--;
-        List<Comment> comments = commentRepository.findAllByDocument(id, PageRequest.of(page, limit)).getContent();
-        return mapperDTO.convertListToListDto(comments, CommentDTO.class);
+        Optional<Document> document = documentRepository.findById(id);
+        if(document.isPresent()) {
+            List<Comment> comments = commentRepository.findAllByDocument(document.get(), PageRequest.of(page, limit)).getContent();
+            return mapperDTO.convertListToListDto(comments, CommentDTO.class);
+        }else{
+            throw new RuntimeException("Document not found");
+        }
     }
 }
 

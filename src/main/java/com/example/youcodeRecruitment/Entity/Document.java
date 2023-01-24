@@ -21,6 +21,12 @@ public class Document {
     @Column(name = "type")
     private Type type;
 
+    @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private String created_at;
+
+    @Column(name = "updated_at", updatable = false , insertable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private String updated_at;
+
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
