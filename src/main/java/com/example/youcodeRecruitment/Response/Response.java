@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Response {
-    private String message = "ok";
-    private int status = 200;
+    private String message = "BAD REQUEST";
+    private int status = 400;
 }
