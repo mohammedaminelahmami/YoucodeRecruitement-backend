@@ -2,6 +2,7 @@ package com.example.youcodeRecruitment.Exception;
 
 import com.example.youcodeRecruitment.Response.Response;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
@@ -27,14 +28,15 @@ public class AppExceptionHandler {
         return ResponseEntity.status(400).body(new Response("Please fallout your fields carefully : " + errors, 400));
     }
 
-//    @ExceptionHandler(RuntimeException.class)
-//    public final ResponseEntity<Response> handleRuntimeExceptions(RuntimeException e) {
-//        HashMap<String, String> errors = new HashMap<>();
-//        errors.put("error", "Ops something went wrong!");
-//        System.out.println(e);
-//
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Ops something went wrong! : " + errors, 500));
-//    }
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<Response> handleRuntimeExceptions(RuntimeException e) {
+        HashMap<String, String> errors = new HashMap<>();
+
+        errors.put("error", "Ops something went wrong!");
+        System.out.println("- ".repeat(100) + e.getMessage() + " -".repeat(100));
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Response("Ops something went wrong! : " + errors, 500));
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response> handleException(Exception e) {
