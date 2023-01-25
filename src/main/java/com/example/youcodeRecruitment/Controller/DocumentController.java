@@ -18,8 +18,8 @@ public class DocumentController {
 
     @PostMapping("/document")
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@RequestParam("file") MultipartFile file) throws IOException {
-        documentService.uploadDocument(file);
+    public void save(@RequestParam("file") MultipartFile file, @RequestParam("type") String type) {
+        documentService.uploadDocument(file, type);
     }
 
     @DeleteMapping("/documents/{id}")

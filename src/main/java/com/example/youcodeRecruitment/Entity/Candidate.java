@@ -25,7 +25,7 @@ public class Candidate extends UserParentClass implements UserDetails {
     private Set<Notification> notificationEntities;
 
     @OneToMany(mappedBy = "candidate")
-    private Set<Document> documentEntities;
+    private Set<Document> documents;
 
     @OneToOne
     @JoinColumn(name = "skills_id")

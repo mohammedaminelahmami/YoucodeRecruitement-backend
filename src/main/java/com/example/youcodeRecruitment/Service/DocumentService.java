@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -21,19 +19,26 @@ public class DocumentService{
     private final DocumentRepository documentRepository;
     private final CandidateRepository candidateRepository;
     private final IMapperDto<DocumentDTO, Document> mapperDto;
+    private final AuthService authService;
+    private final UploadFileService uploadFileService;
 
-    public void uploadDocument(MultipartFile file) throws RuntimeException, IOException {
+    public void uploadDocument(MultipartFile file, String type) throws RuntimeException {
         // Save the file
-        File dest = new File("C:\\Users\\YC\\Desktop\\LearnJava-Js-etc\\youcodeRecruitment\\uploadDocument\\"+file.getOriginalFilename());
-        file.transferTo(dest.toPath());
-        Long id = 1L;
-        Candidate candidate = candidateRepository.findById(id).orElseThrow(() -> new RuntimeException("Candidate not found"));
-        System.out.println("- ".repeat(20)+file.getContentType()+" -".repeat(20));
+        String path = uploadFileService.getPath(file);
+
+        Candidate candidate = authService.getAuthenticatedCandidate();
+        if(candidate == null) throw new RuntimeException("Candidate not found");
+
         Document document = new Document();
-        document.setType(file.getContentType());
-        document.setPath(dest.toPath().toString());
+        document.setType(type);
+        document.setPath(path);
         document.setCandidate(candidate);
         documentRepository.save(document); // save the document
+
+        int documentId = document.getId_document();
+        int candidateId = candidate.getId_user();
+        // Delete the old document
+        candidate.getDocuments().forEach((doc) -> {if(doc.getType().equals(type) && doc.getCandidate().getId_user() == candidateId && doc.getId_document() != documentId){ documentRepository.delete(doc);}});
     }
 
     public void deleteDocument(Long id){
@@ -64,4 +69,6 @@ public class DocumentService{
             throw new RuntimeException("Document not found");
         }
     }
+
+
 }
