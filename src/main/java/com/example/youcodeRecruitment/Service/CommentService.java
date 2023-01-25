@@ -5,11 +5,8 @@ import com.example.youcodeRecruitment.Entity.Document;
 import com.example.youcodeRecruitment.Entity.HR;
 import com.example.youcodeRecruitment.Repository.CommentRepository;
 import com.example.youcodeRecruitment.Repository.DocumentRepository;
-import com.example.youcodeRecruitment.Repository.HRRepository;
 import com.example.youcodeRecruitment.Request.CommentRequest;
 import com.example.youcodeRecruitment.dto.CommentDTO;
-import com.example.youcodeRecruitment.dto.DocumentDTO;
-import com.example.youcodeRecruitment.dto.HRDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -24,35 +21,22 @@ import java.util.Optional;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final DocumentRepository documentRepository;
-    private final HRRepository hrRepository;
     private final IMapperDto<CommentDTO, Comment> mapperDTO;
-    private final IMapperDto<HRDTO, HR> mapperHrDTO;
-    private final IMapperDto<DocumentDTO, Document> mapperDocumentDTO;
+    private final AuthService authService;
 
-    public void createComment(CommentRequest commentRequest, Long idHR, Long idDocument) {
-        Optional<Document> document = documentRepository.findById(idDocument);
-        Optional<HR> hr = hrRepository.findById(idHR);
+    public void createComment(CommentRequest commentRequest, Long id) {
+        HR hr = authService.getAuthenticatedHR(); // get authenticated HR
+        if(hr == null) throw new RuntimeException("HR not found"); // if HR not found throw exception
+        Optional<Document> document = documentRepository.findById(id); // get document by id
 
-        CommentDTO commentDTO = new CommentDTO();
-
-        if(hr.isPresent() && document.isPresent()) {
-            HRDTO hrdto = mapperHrDTO.convertToDTO(hr.get(), HRDTO.class); // map hr to hrDTO
-            DocumentDTO documentDTO = mapperDocumentDTO.convertToDTO(document.get(), DocumentDTO.class); // map document to documentDTO
-
-            commentDTO.setHr(hrdto);
-            commentDTO.setDocument(documentDTO);
-
-        }else{
-            throw new RuntimeException("HR or Document not found");
-        }
-
-        BeanUtils.copyProperties(commentRequest, commentDTO);
-
-        Comment comment = mapperDTO.convertToEntity(commentDTO, Comment.class);
-        if(comment != null) {
+        if(document.isPresent()) {
+            Comment comment = new Comment();
+            BeanUtils.copyProperties(commentRequest, comment);
+            comment.setHr(hr);
+            comment.setDocument(document.get());
             commentRepository.save(comment);
-        }else {
-            throw new RuntimeException("Comment is null");
+        }else{
+            throw new RuntimeException("Document not found");
         }
     }
 
