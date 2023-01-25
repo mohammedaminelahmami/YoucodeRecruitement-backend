@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,46 +67,61 @@ public class AuthService {
         boolean checkIfUserExists = adminRepository.findByEmail(registerRequest.getEmail()).isPresent() ||
                 hrRepository.findByEmail(registerRequest.getEmail()).isPresent() ||
                 candidateRepository.findByEmail(registerRequest.getEmail()).isPresent();
-        if(checkIfUserExists) {
-         throw new Exception("User already exists");
+        if (checkIfUserExists) {
+            throw new Exception("User already exists");
         }
         switch (registerRequest.getRole()) {
-            case "admin"-> {
-                if(adminRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            case "admin" -> {
+                if (adminRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
                 Admin admin = mapperDtoAdmin.convertToEntity(registerRequest, Admin.class);
-                if(admin != null) {
+                if (admin != null) {
                     admin.setPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
                     adminRepository.save(admin);
-                }else{
+                } else {
                     throw new Exception("User not found");
                 }
             }
-            case "hr"-> {
-                if(hrRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            case "hr" -> {
+                if (hrRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
                 HR hr = mapperDtoHR.convertToEntity(registerRequest, HR.class);
-                if(hr != null) {
+                if (hr != null) {
                     hr.setPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
                     hrRepository.save(hr);
-                }else{
+                } else {
                     throw new Exception("User not found");
                 }
             }
-            case "candidate"-> {
-                if(candidateRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
+            case "candidate" -> {
+                if (candidateRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
                 Candidate candidate = mapperDtoCandidate.convertToEntity(registerRequest, Candidate.class);
-                if(candidate != null) {
+                if (candidate != null) {
                     candidate.setPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
                     candidateRepository.save(candidate);
-                }else{
+                } else {
                     throw new Exception("User not found");
                 }
-            }default -> throw new Exception("User not found");
+            }
+            default -> throw new Exception("User not found");
         }
     }
+
+    public Candidate getAuthenticatedCandidate() {
+        return candidateRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+    }
+
+    public HR getAuthenticatedHR() {
+        return hrRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+    }
+
+    public Admin getAuthenticatedAdmin() {
+        return adminRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
+    }
+
+
 }

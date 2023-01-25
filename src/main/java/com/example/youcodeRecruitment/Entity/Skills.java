@@ -26,6 +26,12 @@ public class Skills {
     @Column(name = "outil_skills")
     private String outil_skills;
 
+    @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private String created_at;
+
+    @Column(name = "updated_at", updatable = false , insertable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private String updated_at;
+
     @OneToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
