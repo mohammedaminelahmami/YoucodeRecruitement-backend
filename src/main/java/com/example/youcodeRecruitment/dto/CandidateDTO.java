@@ -10,4 +10,6 @@ public class CandidateDTO {
     private String firstName;
     private String lastName;
     private String email;
+    private String image;
+    private Boolean status;
 }

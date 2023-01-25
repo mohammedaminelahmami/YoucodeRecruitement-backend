@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.modelmapper.ModelMapper;
 
+
 @SpringBootApplication
 public class YoucodeRecruitmentApplication {
 
