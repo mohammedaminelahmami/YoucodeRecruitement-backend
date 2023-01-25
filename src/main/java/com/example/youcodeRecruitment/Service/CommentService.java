@@ -3,6 +3,7 @@ package com.example.youcodeRecruitment.Service;
 import com.example.youcodeRecruitment.Entity.Comment;
 import com.example.youcodeRecruitment.Entity.Document;
 import com.example.youcodeRecruitment.Entity.HR;
+import com.example.youcodeRecruitment.Entity.Notification;
 import com.example.youcodeRecruitment.Repository.CommentRepository;
 import com.example.youcodeRecruitment.Repository.DocumentRepository;
 import com.example.youcodeRecruitment.Request.CommentRequest;
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final NotificationService notificationService;
     private final DocumentRepository documentRepository;
     private final IMapperDto<CommentDTO, Comment> mapperDTO;
     private final AuthService authService;

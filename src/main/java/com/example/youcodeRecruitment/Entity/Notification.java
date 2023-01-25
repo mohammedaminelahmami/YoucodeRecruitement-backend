@@ -17,11 +17,8 @@ public class Notification {
     @Column(name = "message")
     private String message;
 
-    @Column(name = "is_read", columnDefinition = "boolean default false")
+    @Column(name = "is_read", insertable = false, columnDefinition = "boolean default false")
     private boolean is_read;
-
-    @Column(name = "is_deleted", columnDefinition = "boolean default false")
-    private boolean is_deleted;
 
     @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private String created_at;
@@ -29,6 +26,11 @@ public class Notification {
     @ManyToOne
     @JoinColumn(name = "candidate_id")
     private Candidate candidate;
+
+    @ManyToOne
+    @JoinColumn(name = "document_id")
+    private Document document;
+
 
 
 }
