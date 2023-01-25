@@ -17,33 +17,33 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping("/comment/{idHR}/{idDocument}")
+    @PostMapping("/comment/{id}") // idDocument
     @ResponseStatus(HttpStatus.CREATED)
-    public void save(@PathVariable String idHR, @PathVariable String idDocument, @RequestBody @Valid CommentRequest commentRequest) {
-        commentService.createComment(commentRequest, Long.parseLong(idHR), Long.parseLong(idDocument));
+    public void save(@PathVariable String id, @RequestBody @Valid CommentRequest commentRequest) {
+        commentService.createComment(commentRequest, Long.parseLong(id));
     }
 
-    @PutMapping("/comments/{id}")
+    @PutMapping("/comments/{id}") // idComment
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void update(@PathVariable String id ,@RequestBody @Valid CommentRequest commentRequest) {
         commentService.updateComment(commentRequest, Long.parseLong(id));
     }
 
-    @DeleteMapping("/comments/{id}")
+    @DeleteMapping("/comments/{id}") // idComment
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable String id) {
         commentService.deleteComment(Long.parseLong(id));
     }
 
-    @GetMapping("/comment/{id}")
+    @GetMapping("/comment/{id}") // idComment
     @ResponseStatus(HttpStatus.OK)
     public CommentDTO getOne(@PathVariable String id) {
         return commentService.getOneComment(Long.parseLong(id));
     }
 
-    @GetMapping("/comments/{idDocument}")
+    @GetMapping("/comments/{id}") // idDocument
     @ResponseStatus(HttpStatus.OK)
-    public List<CommentDTO> getAllById(@PathVariable String idDocument, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
-        return commentService.getAllCommentsById(Long.parseLong(idDocument), page, limit);
+    public List<CommentDTO> getAllById(@PathVariable String id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+        return commentService.getAllCommentsById(Long.parseLong(id), page, limit);
     }
 }

@@ -8,5 +8,6 @@ import lombok.Setter;
 public class DocumentDTO {
     private int id_document;
     private String type;
+    private String path;
     private CandidateDTO candidate;
 }

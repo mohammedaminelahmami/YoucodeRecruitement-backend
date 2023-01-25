@@ -11,15 +11,22 @@ import java.util.Set;
 @Entity
 @Table(name = "document", catalog = "youcoderecruitment")
 public class Document {
-    private enum Type {CV, MotivationLetter, Other};
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_document")
     private int id_document;
 
     @Column(name = "type")
-    private Type type;
+    private String type;
+
+    @Column(name = "path")
+    private String path;
+
+    @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private String created_at;
+
+    @Column(name = "updated_at", updatable = false , insertable = false ,columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    private String updated_at;
 
     @ManyToOne
     @JoinColumn(name = "candidate_id")
