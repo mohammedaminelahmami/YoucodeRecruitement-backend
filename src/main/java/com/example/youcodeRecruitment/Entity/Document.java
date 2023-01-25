@@ -28,5 +28,9 @@ public class Document {
     @OneToMany(mappedBy = "document")
     private Set<Comment> commentEntities;
 
+    @OneToMany(mappedBy = "document")
+    private Set<Notification> notificationEntities;
+
+
 
 }
