@@ -1,6 +1,7 @@
 package com.example.youcodeRecruitment.Service;
 
 import com.example.youcodeRecruitment.Entity.Candidate;
+import com.example.youcodeRecruitment.Entity.Skills;
 import com.example.youcodeRecruitment.Repository.CandidateRepository;
 import com.example.youcodeRecruitment.Request.CandidatRequest;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
@@ -55,6 +56,20 @@ public class CandidatService {
             List<Candidate> candidates = candidateRepository.findAll(PageRequest.of(page, limit)).getContent();
             return mapperDTO.convertListToListDto(candidates, CandidateDTO.class);
 
+    }
+
+
+//    public List<CandidateDTO> searchByFirstNameLastName(String firstName, String lastName, String frontend_skills, String backend_skills, String db_skills, String outil_skills) {
+//       List<Candidate> candidates = candidateRepository.searchCandidateByFirstnameContainingIgnoreCaseOrLastnameContainingIgnoreCaseOrSkills_Backend_skills(firstName, lastName, backend_skills);
+//       List<CandidateDTO> candidateDTOS = mapperDTO.convertListToListDto(candidates,CandidateDTO.class);
+//       return candidateDTOS;
+//    }
+
+    public List<CandidateDTO> searchByFirstNameLastNameSkills(String firstname, String lastname,String frontend, String backend, String db, String outil) {
+
+        List<Candidate> candidates = candidateRepository.findByFirstnameIgnoreCaseContainingOrLastnameIgnoreCaseContainingOrSkillsFrontendIgnoreCaseContainingOrSkillsBackendIgnoreCaseContainingOrSkillsDbIgnoreCaseContainingOrSkillsOutilIgnoreCaseContaining(firstname,lastname,frontend,backend,db,outil);
+        List<CandidateDTO> candidateDTOS = mapperDTO.convertListToListDto(candidates,CandidateDTO.class);
+        return candidateDTOS;
     }
 }
 
