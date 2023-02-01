@@ -1,12 +1,15 @@
 package com.example.youcodeRecruitment.Controller;
 
 
+import com.example.youcodeRecruitment.Entity.HR;
 import com.example.youcodeRecruitment.Request.HrRequest;
 import com.example.youcodeRecruitment.Request.SaveHrRequest;
 import com.example.youcodeRecruitment.Service.HrService;
+import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.HRDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +51,7 @@ public class HrController {
     //    function get all HRS
     @GetMapping("/hrs")
     @ResponseStatus(HttpStatus.OK)
-    public List<HRDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+    public PaginatedDto<HRDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
         return hrService.getAllHrs(page, limit);
     }
 }
