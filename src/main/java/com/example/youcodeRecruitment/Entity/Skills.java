@@ -14,17 +14,17 @@ public class Skills {
     @Column(name = "id_skill")
     private int id_skill;
 
-    @Column(name = "frontend_skills")
-    private String frontend_skills;
+    @Column(name = "frontend")
+    private String frontend;
 
-    @Column(name = "backend_skills")
-    private String backend_skills;
+    @Column(name = "backend")
+    private String backend;
 
-    @Column(name = "db_skills")
-    private String db_skills;
+    @Column(name = "db")
+    private String db;
 
-    @Column(name = "outil_skills")
-    private String outil_skills;
+    @Column(name = "outil")
+    private String outil;
 
     @Column(name = "created_at", updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private String created_at;

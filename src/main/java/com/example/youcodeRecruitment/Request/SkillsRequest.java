@@ -8,15 +8,15 @@ import lombok.Setter;
 @Setter
 public class SkillsRequest {
     @NotBlank(message = "Front End Skills is required")
-    private String frontend_skills;
+    private String frontend;
 
     @NotBlank(message = "Back End Skills is required")
-    private String backend_skills;
+    private String backend;
 
     @NotBlank(message = "Database Skills is required")
-    private String db_skills;
+    private String db;
 
     @NotBlank(message = "Outil Skills is required")
-    private String outil_skills;
+    private String outil;
 
 }
