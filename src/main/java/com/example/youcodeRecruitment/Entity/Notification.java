@@ -28,9 +28,7 @@ public class Notification {
     private Candidate candidate;
 
     @ManyToOne
-    @JoinColumn(name = "document_id")
-    private Document document;
-
-
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
 
 }

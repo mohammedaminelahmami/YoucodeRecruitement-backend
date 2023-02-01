@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface HrRepository extends JpaRepository<HR, Long> {
+public interface HRRepository extends JpaRepository<HR, Long> {
     Optional<HR> findByEmail(String email);
     Page<HR> findAll(Pageable pageable);
 }

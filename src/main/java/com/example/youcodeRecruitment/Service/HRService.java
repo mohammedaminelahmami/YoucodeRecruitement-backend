@@ -1,7 +1,7 @@
 package com.example.youcodeRecruitment.Service;
 
 import com.example.youcodeRecruitment.Entity.HR;
-import com.example.youcodeRecruitment.Repository.HrRepository;
+import com.example.youcodeRecruitment.Repository.HRRepository;
 import com.example.youcodeRecruitment.Request.HrRequest;
 import com.example.youcodeRecruitment.dto.HRDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
@@ -14,8 +14,8 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class HrService {
-    private final HrRepository hrRepository;
+public class HRService {
+    private final HRRepository hrRepository;
     private final IMapperDto<HRDTO, HR> mapperDTO;
 
     public void updateHr(HrRequest hrRequest, Long id) {

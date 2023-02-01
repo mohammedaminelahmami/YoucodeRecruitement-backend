@@ -5,10 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
-public class CandidatRequest {
+public class CandidateRequest {
     @NotBlank(message = "firstName is required")
     private String firstName;
 
@@ -23,9 +24,5 @@ public class CandidatRequest {
     @NotBlank(message = "password is required")
     private String password;
 
-
-    @NotBlank(message = "image is required")
-    private String image;
-
+    private MultipartFile imageFile;
 }
-
