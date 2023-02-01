@@ -1,5 +1,6 @@
 package com.example.youcodeRecruitment.dto.mapper;
 
+
 import java.util.List;
 
 public interface IMapperDto<D, E> {

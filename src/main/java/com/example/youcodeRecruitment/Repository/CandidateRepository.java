@@ -12,7 +12,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Long> {
     Optional<Candidate> findByEmail(String email);
 
     Page<Candidate> findAll(Pageable pageable);
-
     List<Candidate> findByFirstnameIgnoreCaseContainingOrLastnameIgnoreCaseContainingOrSkillsFrontendIgnoreCaseContainingOrSkillsBackendIgnoreCaseContainingOrSkillsDbIgnoreCaseContainingOrSkillsOutilIgnoreCaseContaining(String firstName, String lastName, String frontend, String backend, String db, String outil);
 
 
