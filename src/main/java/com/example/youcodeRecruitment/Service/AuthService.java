@@ -9,6 +9,7 @@ import com.example.youcodeRecruitment.Repository.HrRepository;
 import com.example.youcodeRecruitment.Request.AuthRequest;
 import com.example.youcodeRecruitment.Request.RegisterRequest;
 import com.example.youcodeRecruitment.Security.JwtUtils;
+import com.example.youcodeRecruitment.Utils.RoleEnum;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +71,7 @@ public class AuthService {
             throw new Exception("User already exists");
         }
         switch (registerRequest.getRole()) {
-            case "admin" -> {
+            case "ROLE_ADMIN" -> {
                 if (adminRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
@@ -82,7 +83,7 @@ public class AuthService {
                     throw new Exception("User not found");
                 }
             }
-            case "hr" -> {
+            case "ROLE_HR" -> {
                 if (hrRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
@@ -94,7 +95,7 @@ public class AuthService {
                     throw new Exception("User not found");
                 }
             }
-            case "candidate" -> {
+            case "ROLE_CANDIDATE" -> {
                 if (candidateRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }

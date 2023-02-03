@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CandidatRequest {
+public class CandidateRequest {
     @NotBlank(message = "firstName is required")
     private String firstName;
 
@@ -22,10 +22,4 @@ public class CandidatRequest {
     @Size(min = 6, message = "password must be at least 6 characters")
     @NotBlank(message = "password is required")
     private String password;
-
-
-    @NotBlank(message = "image is required")
-    private String image;
-
 }
-

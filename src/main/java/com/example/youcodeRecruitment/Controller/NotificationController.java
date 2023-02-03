@@ -21,7 +21,6 @@ public class NotificationController {
         notificationService.notificationSeen(id);
     }
 
-
     @PostMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteNotification(int id) {

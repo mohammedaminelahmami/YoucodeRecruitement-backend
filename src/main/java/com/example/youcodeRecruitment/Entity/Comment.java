@@ -30,4 +30,8 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "document_id")
     private Document document;
+
+    @OneToOne
+    @JoinColumn(name = "notification_id")
+    private Notification notification;
 }
