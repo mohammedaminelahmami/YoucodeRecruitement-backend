@@ -1,6 +1,5 @@
 package com.example.youcodeRecruitment.Controller;
 
-
 import com.example.youcodeRecruitment.Request.HrRequest;
 import com.example.youcodeRecruitment.Service.HRService;
 import com.example.youcodeRecruitment.dto.HRDTO;

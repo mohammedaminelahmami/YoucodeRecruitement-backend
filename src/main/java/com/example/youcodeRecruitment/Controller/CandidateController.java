@@ -20,10 +20,14 @@ public class CandidateController {
     // method update candidate
     @PutMapping("/candidate/{id}") // idCandidate
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@PathVariable String id, @RequestParam("firstName") String firstName,
-                       @RequestParam("lastName") String lastName, @RequestParam("email") String email,
-                       @RequestParam("password") String password, @RequestParam("imageFile") MultipartFile imageFile) {
-        candidateService.updateCandidate(firstName, lastName, email, password, imageFile, Long.parseLong(id));
+    public void update(@PathVariable String id, @RequestBody CandidateRequest candidateRequest) {
+        candidateService.updateCandidate(candidateRequest, Long.parseLong(id));
+    }
+
+    @PutMapping("/candidateImage/{id}") // idCandidate
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void updateImage(@PathVariable String id, @RequestParam("imageFile") MultipartFile imageFile) {
+        candidateService.updateCandidateImage(Long.parseLong(id), imageFile);
     }
 
     // method delete candidate
