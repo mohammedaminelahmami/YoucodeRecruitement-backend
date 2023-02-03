@@ -1,6 +1,7 @@
 package com.example.youcodeRecruitment.Repository;
 
 import com.example.youcodeRecruitment.Entity.HR;
+import com.example.youcodeRecruitment.dto.HRDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
