@@ -2,6 +2,7 @@ package com.example.youcodeRecruitment.Controller;
 
 import com.example.youcodeRecruitment.Request.CandidateRequest;
 import com.example.youcodeRecruitment.Service.CandidateService;
+import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
 import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -48,7 +48,7 @@ public class CandidateController {
     // method get all candidates
     @GetMapping("/candidates")
     @ResponseStatus(HttpStatus.OK)
-    public List<CandidateDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+    public PaginatedDto<CandidateDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
         return candidateService.getAllCandidates(page, limit);
     }
 }
