@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
-@RequestMapping("/api/v1/authentication")
+    @RequestMapping("/api/v1/authentication")
 @RestController
 public class AuthController {
 

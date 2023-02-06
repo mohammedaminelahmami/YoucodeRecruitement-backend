@@ -2,7 +2,9 @@ package com.example.youcodeRecruitment.Controller;
 
 import com.example.youcodeRecruitment.Request.CandidatRequest;
 import com.example.youcodeRecruitment.Service.CandidatService;
+import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
+import com.example.youcodeRecruitment.dto.HRDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -40,7 +42,7 @@ public class CandidatController {
 //    function get all candidates
     @GetMapping("/candidates")
     @ResponseStatus(HttpStatus.OK)
-    public List<CandidateDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
-        return candidatService.getAllCandidates(page, limit);
+    public PaginatedDto<CandidateDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
+        return candidatService.getAllCandidate(page, limit);
     }
 }

@@ -1,12 +1,16 @@
 package com.example.youcodeRecruitment.Service;
 
 import com.example.youcodeRecruitment.Entity.Candidate;
+import com.example.youcodeRecruitment.Entity.HR;
 import com.example.youcodeRecruitment.Entity.Skills;
 import com.example.youcodeRecruitment.Repository.CandidateRepository;
 import com.example.youcodeRecruitment.Request.CandidatRequest;
+import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
+import com.example.youcodeRecruitment.dto.HRDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -51,10 +55,11 @@ public class CandidatService {
         }
     }
 
-    public List<CandidateDTO> getAllCandidates(int page, int limit) {
-        if(page > 0) page--;
-            List<Candidate> candidates = candidateRepository.findAll(PageRequest.of(page, limit)).getContent();
-            return mapperDTO.convertListToListDto(candidates, CandidateDTO.class);
+    public PaginatedDto<CandidateDTO> getAllCandidate(int page, int limit) {
+        if (page > 0) page--;
+        Page<Candidate> pageCandidate = candidateRepository.findAll(PageRequest.of(page, limit));
+        List<CandidateDTO> candidatedtos =  mapperDTO.convertListToListDto(pageCandidate.getContent(), CandidateDTO.class);
+        return new PaginatedDto<>(candidatedtos, pageCandidate.getTotalElements(), pageCandidate.getTotalPages(), pageCandidate.getNumber());
 
     }
 
@@ -71,5 +76,7 @@ public class CandidatService {
         List<CandidateDTO> candidateDTOS = mapperDTO.convertListToListDto(candidates,CandidateDTO.class);
         return candidateDTOS;
     }
+
+    
 }
 
