@@ -1,9 +1,9 @@
 package com.example.youcodeRecruitment.dto.mapper;
 
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -51,4 +51,12 @@ public class MapperDtoImpl<D, E> implements IMapperDto<D, E> {
         return listDto.stream().map(dto -> convertToEntity(dto, entityClass)).collect(Collectors.toList());
     }
 
+    @Override
+    public Page<D> convertPageToPageDto(Page<E> entityList, Class<D> outClass) {
+        if(entityList == null)
+            return Page.empty();
+
+        List<D> all =  entityList.stream().map(entity -> convertToDTO(entity,outClass)).collect(Collectors.toList());
+        return new PageImpl<>(all);
+    }
 }

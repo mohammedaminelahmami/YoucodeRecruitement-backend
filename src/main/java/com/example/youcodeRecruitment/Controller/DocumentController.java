@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")
@@ -28,10 +26,10 @@ public class DocumentController {
         documentService.deleteDocument(Long.parseLong(id));
     }
 
-    @GetMapping("/documents/documentId/{id}")
+    @GetMapping("/documents/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public DocumentDTO getOneByDocument(@PathVariable String id) {
-        return documentService.getOneDocument(Long.parseLong(id));
+    public DocumentDTO getOneByDocument(@PathVariable String id, @RequestParam String type) {
+        return documentService.getOneDocument(Long.parseLong(id), type);
     }
 
     @GetMapping("/documents/candidateId/{idCandidate}")

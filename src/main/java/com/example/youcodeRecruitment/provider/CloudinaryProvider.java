@@ -12,7 +12,6 @@ import java.util.Map;
 @Component
 @Configuration
 public class CloudinaryProvider {
-
     public String uploadFile(MultipartFile file)  {
         Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
                 "cloud_name", "dxtd38f8u",

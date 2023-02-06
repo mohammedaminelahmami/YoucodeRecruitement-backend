@@ -1,30 +1,25 @@
 package com.example.youcodeRecruitment.Service;
 
 import com.example.youcodeRecruitment.Entity.HR;
-import com.example.youcodeRecruitment.Repository.HrRepository;
+import com.example.youcodeRecruitment.Repository.HRRepository;
 import com.example.youcodeRecruitment.Request.HrRequest;
 import com.example.youcodeRecruitment.Request.SaveHrRequest;
 import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.HRDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
 public class HrService {
-    private final HrRepository hrRepository;
+    private final HRRepository hrRepository;
     private final IMapperDto<HRDTO, HR> mapperDTO;
     private final IMapperDto<SaveHrRequest, HR> mapperSaveRequest;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;

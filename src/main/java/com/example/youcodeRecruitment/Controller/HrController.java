@@ -1,17 +1,18 @@
 package com.example.youcodeRecruitment.Controller;
 
-
-import com.example.youcodeRecruitment.Entity.HR;
 import com.example.youcodeRecruitment.Request.HrRequest;
 import com.example.youcodeRecruitment.Request.SaveHrRequest;
+<<<<<<< HEAD
 import com.example.youcodeRecruitment.Service.CandidatService;
+=======
+import com.example.youcodeRecruitment.Service.CandidateService;
+>>>>>>> f646ac5fe9ab7c796e191573eb50f476dd028df8
 import com.example.youcodeRecruitment.Service.HrService;
 import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
 import com.example.youcodeRecruitment.dto.HRDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class HrController {
     private final HrService hrService;
-    private final CandidatService candidatService;
+    private final CandidateService candidateService;
 
     @PostMapping("/hr")
     @ResponseStatus(HttpStatus.CREATED)
@@ -75,8 +76,6 @@ public class HrController {
                                      @RequestParam(value = "backend", required = false) String backend,
                                      @RequestParam(value = "db", required = false) String db,
                                      @RequestParam(value = "outil", required = false) String outil) {
-        return candidatService.searchByFirstNameLastNameSkills(firstname, lastname, frontend, backend, db, outil);
+        return candidateService.searchByFirstNameLastNameSkills(firstname, lastname, frontend, backend, db, outil);
     }
-    }
-
-
+}

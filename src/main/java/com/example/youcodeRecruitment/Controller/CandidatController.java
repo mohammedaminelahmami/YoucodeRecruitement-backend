@@ -1,10 +1,9 @@
 package com.example.youcodeRecruitment.Controller;
 
-import com.example.youcodeRecruitment.Request.CandidatRequest;
-import com.example.youcodeRecruitment.Service.CandidatService;
+import com.example.youcodeRecruitment.Request.CandidateRequest;
+import com.example.youcodeRecruitment.Service.CandidateService;
 import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
-import com.example.youcodeRecruitment.dto.HRDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,13 +15,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/")
 public class CandidatController {
-    private final CandidatService candidatService;
+    private final CandidateService candidatService;
 
 //   function update candidate
     @PutMapping("/candidate/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@PathVariable String id ,@RequestBody @Valid CandidatRequest candidatRequest) {
-        candidatService.updateCandidat(candidatRequest, Long.parseLong(id));
+    public void update(@PathVariable String id ,@RequestBody @Valid CandidateRequest candidatRequest) {
+        candidatService.updateCandidate(candidatRequest, Long.parseLong(id));
     }
 
 //    function delete candidate

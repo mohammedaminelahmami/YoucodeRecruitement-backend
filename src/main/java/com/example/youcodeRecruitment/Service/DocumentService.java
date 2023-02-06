@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class DocumentService{
+public class DocumentService {
 
     private final DocumentRepository documentRepository;
     private final CandidateRepository candidateRepository;
@@ -23,52 +23,70 @@ public class DocumentService{
     private final UploadFileService uploadFileService;
 
     public void uploadDocument(MultipartFile file, String type) throws RuntimeException {
+        if(file == null) throw new RuntimeException("File not found");
         // Save the file
         String path = uploadFileService.getPath(file);
+        if(path == null || path.equals("")) throw new RuntimeException("File not found");
 
         Candidate candidate = authService.getAuthenticatedCandidate();
-        if(candidate == null) throw new RuntimeException("Candidate not found");
+        if (candidate == null) throw new RuntimeException("Candidate not found");
 
-        Document document = new Document();
-        document.setType(type);
-        document.setPath(path);
-        document.setCandidate(candidate);
-        documentRepository.save(document); // save the document
+        Optional<Document> findDoc = documentRepository.findByCandidateAndType(candidate, type);
 
-        int documentId = document.getId_document();
-        int candidateId = candidate.getId_user();
-        // Delete the old document
-        candidate.getDocuments().forEach((doc) -> {if(doc.getType().equals(type) && doc.getCandidate().getId_user() == candidateId && doc.getId_document() != documentId){ documentRepository.delete(doc);}});
+        if(findDoc.isPresent())
+        {
+            findDoc.get().setPath(path);
+            documentRepository.save(findDoc.get());
+        }else{
+            Document document = new Document();
+
+            document.setType(type);
+            document.setPath(path);
+            document.setCandidate(candidate);
+            documentRepository.save(document); // save the document
+        }
     }
 
-    public void deleteDocument(Long id){
+    public void deleteDocument(Long id) {
         Optional<Document> document = documentRepository.findById(id);
-        if(document.isPresent()){
+        if (document.isPresent()) {
             documentRepository.delete(document.get());
-        }else{
+        } else {
             throw new RuntimeException("Document not found");
         }
     }
 
-    public DocumentDTO getOneDocument(Long id) {
-        Optional<Document> document = documentRepository.findById(id);
-        if(document.isPresent()){
-            return mapperDto.convertToDTO(document.get(), DocumentDTO.class);
-        }else{
-            throw new RuntimeException("Document not found");
-        }
-    }
+//    public DocumentDTO getOneDocument(Long id) {
+//        Optional<Document> document = documentRepository.findById(id);
+//        if (document.isPresent()) {
+//            return mapperDto.convertToDTO(document.get(), DocumentDTO.class);
+//        } else {
+//            throw new RuntimeException("Document not found");
+//        }
+//    }
 
     public DocumentDTO getOneByIdCandidate(Long idCandidate) {
         // Todo : fix more than one document
         Candidate candidate = candidateRepository.findById(idCandidate).orElseThrow(() -> new RuntimeException("Candidate not found"));
         Optional<Document> document = documentRepository.findByCandidate(candidate);
-        if(document.isPresent()){
+        if (document.isPresent()) {
             return mapperDto.convertToDTO(document.get(), DocumentDTO.class);
-        }else{
+        } else {
             throw new RuntimeException("Document not found");
         }
     }
 
-
+    public DocumentDTO getOneDocument(Long idCandidate, String type) {
+        Optional<Candidate> candidate = candidateRepository.findById(idCandidate);
+        if (candidate.isPresent()) {
+            Optional<Document> document = documentRepository.findByCandidateAndType(candidate.get(), type);
+            if (document.isPresent()) {
+                return mapperDto.convertToDTO(document.get(), DocumentDTO.class);
+            } else {
+                throw new RuntimeException("Document not found");
+            }
+        } else {
+            throw new RuntimeException("Candidate not found");
+        }
+    }
 }

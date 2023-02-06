@@ -28,7 +28,9 @@ public class CommentService {
 
     public void createComment(CommentRequest commentRequest, Long id) {
         HR hr = authService.getAuthenticatedHR(); // get authenticated HR
-        if(hr == null) throw new RuntimeException("HR not found"); // if HR not found throw exception
+        if(hr == null) {
+            //
+        }
         Optional<Document> document = documentRepository.findById(id); // get document by id
 
         if(document.isPresent()) {

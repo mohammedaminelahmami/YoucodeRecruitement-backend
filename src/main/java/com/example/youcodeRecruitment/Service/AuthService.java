@@ -5,7 +5,7 @@ import com.example.youcodeRecruitment.Entity.Candidate;
 import com.example.youcodeRecruitment.Entity.HR;
 import com.example.youcodeRecruitment.Repository.AdminRepository;
 import com.example.youcodeRecruitment.Repository.CandidateRepository;
-import com.example.youcodeRecruitment.Repository.HrRepository;
+import com.example.youcodeRecruitment.Repository.HRRepository;
 import com.example.youcodeRecruitment.Request.AuthRequest;
 import com.example.youcodeRecruitment.Request.RegisterRequest;
 import com.example.youcodeRecruitment.Security.JwtUtils;
@@ -29,7 +29,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final AdminRepository adminRepository;
     private final CandidateRepository candidateRepository;
-    private final HrRepository hrRepository;
+    private final HRRepository hrRepository;
     private final IMapperDto<RegisterRequest, Admin> mapperDtoAdmin;
     private final IMapperDto<RegisterRequest, Candidate> mapperDtoCandidate;
     private final IMapperDto<RegisterRequest, HR> mapperDtoHR;
@@ -72,7 +72,7 @@ public class AuthService {
             throw new Exception("User already exists");
         }
         switch (registerRequest.getRole()) {
-            case "admin" -> {
+            case "ROLE_ADMIN" -> {
                 if (adminRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
@@ -84,7 +84,7 @@ public class AuthService {
                     throw new Exception("User not found");
                 }
             }
-            case "hr" -> {
+            case "ROLE_HR" -> {
                 if (hrRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
@@ -96,7 +96,7 @@ public class AuthService {
                     throw new Exception("User not found");
                 }
             }
-            case "candidate" -> {
+            case "ROLE_CANDIDATE" -> {
                 if (candidateRepository.findByEmail(registerRequest.getEmail()).isPresent()) {
                     throw new Exception("User already exists");
                 }
