@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -50,6 +49,6 @@ public class CandidateController {
     @GetMapping("/candidates")
     @ResponseStatus(HttpStatus.OK)
     public PaginatedDto<CandidateDTO> getAllById(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int limit) {
-        return candidateService.getAllCandidate(page, limit);
+        return candidateService.getAllCandidates(page, limit);
     }
 }
