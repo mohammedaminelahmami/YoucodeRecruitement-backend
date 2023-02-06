@@ -33,7 +33,6 @@ public class HRController {
     public void update(@PathVariable String id ,@RequestBody @Valid HRRequest hrRequest) {
         hrService.updateHr(hrRequest, Long.parseLong(id));
     }
-
     //    function delete Hr
     @DeleteMapping("/hr/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -65,6 +64,7 @@ public class HRController {
 //                           ) {
 //        return candidatService.searchByFirstNameLastNameSkills(firstName, lastName, frontend_skills);
 //    }
+
 
     //    Method search
     @GetMapping("/Hrs/search")
