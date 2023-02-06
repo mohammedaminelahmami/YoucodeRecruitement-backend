@@ -35,6 +35,8 @@ public class AuthService {
     private final IMapperDto<RegisterRequest, HR> mapperDtoHR;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+
+
     public ResponseEntity<HashMap<String, String>> login(AuthRequest authRequest) {
         Admin admin = adminRepository.findByEmail(authRequest.getEmail()).orElse(null);
         if (admin != null) {

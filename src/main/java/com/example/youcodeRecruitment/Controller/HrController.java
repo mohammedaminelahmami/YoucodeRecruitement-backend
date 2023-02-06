@@ -1,9 +1,9 @@
 package com.example.youcodeRecruitment.Controller;
 
-import com.example.youcodeRecruitment.Request.HrRequest;
+import com.example.youcodeRecruitment.Request.HRRequest;
 import com.example.youcodeRecruitment.Request.SaveHrRequest;
 import com.example.youcodeRecruitment.Service.CandidateService;
-import com.example.youcodeRecruitment.Service.HrService;
+import com.example.youcodeRecruitment.Service.HRService;
 import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
 import com.example.youcodeRecruitment.dto.HRDTO;
@@ -17,8 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1")
-public class HrController {
-    private final HrService hrService;
+public class HRController {
+    private final HRService hrService;
     private final CandidateService candidateService;
 
     @PostMapping("/hr")
@@ -30,7 +30,7 @@ public class HrController {
     //   function update HR
     @PutMapping("/hr/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@PathVariable String id ,@RequestBody @Valid HrRequest hrRequest) {
+    public void update(@PathVariable String id ,@RequestBody @Valid HRRequest hrRequest) {
         hrService.updateHr(hrRequest, Long.parseLong(id));
     }
 
