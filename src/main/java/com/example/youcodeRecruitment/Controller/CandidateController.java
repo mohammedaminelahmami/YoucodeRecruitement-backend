@@ -3,7 +3,7 @@ package com.example.youcodeRecruitment.Controller;
 import com.example.youcodeRecruitment.Request.CandidateRequest;
 import com.example.youcodeRecruitment.Service.CandidateService;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
-import jakarta.validation.Valid;
+import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@MultipartConfig
 @RequestMapping("/api/v1/")
 public class CandidateController {
     private final CandidateService candidateService;
@@ -24,10 +25,10 @@ public class CandidateController {
         candidateService.updateCandidate(candidateRequest, Long.parseLong(id));
     }
 
-    @PutMapping("/candidateImage/{id}") // idCandidate
+    @PostMapping("/candidateImage")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateImage(@PathVariable String id, @RequestParam("imageFile") MultipartFile imageFile) {
-        candidateService.updateCandidateImage(Long.parseLong(id), imageFile);
+    public void updateImage(@RequestParam(value = "id") Long id, @RequestParam("imageFile") MultipartFile imageFile) {
+        candidateService.updateCandidateImage(id, imageFile);
     }
 
     // method delete candidate
