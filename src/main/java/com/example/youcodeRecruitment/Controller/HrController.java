@@ -64,6 +64,8 @@ public class HRController {
 //                           ) {
 //        return candidatService.searchByFirstNameLastNameSkills(firstName, lastName, frontend_skills);
 //    }
+
+    //    Method search
     @GetMapping("/Hrs/search")
     @ResponseStatus(HttpStatus.OK)
     public List<CandidateDTO> search(@RequestParam(value = "firstname", required = false) String firstname,
