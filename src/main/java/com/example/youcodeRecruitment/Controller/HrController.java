@@ -55,6 +55,7 @@ public class HRController {
         return hrService.getAllHrs(page, limit);
     }
 
+
 //    Method get all by First name
 //    @GetMapping("/Hrs/search")
 //    @ResponseStatus(HttpStatus.OK)
