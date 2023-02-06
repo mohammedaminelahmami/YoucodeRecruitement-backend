@@ -75,5 +75,12 @@ public class CandidateService {
         List<Candidate> candidates = candidateRepository.findAll(PageRequest.of(page, limit)).getContent();
         return mapperDTO.convertListToListDto(candidates, CandidateDTO.class);
     }
+
+    public List<CandidateDTO> searchByFirstNameLastNameSkills(String firstname, String lastname,String frontend, String backend, String db, String outil) {
+
+        List<Candidate> candidates = candidateRepository.findByFirstnameIgnoreCaseContainingOrLastnameIgnoreCaseContainingOrSkillsFrontendIgnoreCaseContainingOrSkillsBackendIgnoreCaseContainingOrSkillsDbIgnoreCaseContainingOrSkillsOutilIgnoreCaseContaining(firstname,lastname,frontend,backend,db,outil);
+        List<CandidateDTO> candidateDTOS = mapperDTO.convertListToListDto(candidates,CandidateDTO.class);
+        return candidateDTOS;
+    }
 }
 

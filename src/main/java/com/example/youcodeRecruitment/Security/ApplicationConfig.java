@@ -2,7 +2,7 @@ package com.example.youcodeRecruitment.Security;
 
 import com.example.youcodeRecruitment.Repository.AdminRepository;
 import com.example.youcodeRecruitment.Repository.CandidateRepository;
-import com.example.youcodeRecruitment.Repository.HrRepository;
+import com.example.youcodeRecruitment.Repository.HRRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +21,7 @@ public class ApplicationConfig {
 
     private final AdminRepository adminRepository;
     private final CandidateRepository candidateRepository;
-    private final HrRepository hrRepository;
+    private final HRRepository hrRepository;
 
     @Bean
     public UserDetailsService userDetailsService(){

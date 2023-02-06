@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface DocumentRepository extends JpaRepository<Document, Long> {
     Optional<Document> findByCandidate(Candidate candidate);
+    Optional<Document> findByCandidateAndType(Candidate candidate, String type);
 }
