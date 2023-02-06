@@ -2,34 +2,25 @@ package com.example.youcodeRecruitment.Service;
 
 import com.example.youcodeRecruitment.Entity.HR;
 import com.example.youcodeRecruitment.Repository.HRRepository;
-import com.example.youcodeRecruitment.Request.HrRequest;
+import com.example.youcodeRecruitment.Request.HRRequest;
 import com.example.youcodeRecruitment.Request.SaveHrRequest;
 import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.HRDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
-<<<<<<< HEAD:src/main/java/com/example/youcodeRecruitment/Service/HRService.java
+
+@RequiredArgsConstructor
 public class HRService {
     private final HRRepository hrRepository;
-=======
-@RequiredArgsConstructor
-public class HrService {
-    private final HrRepository hrRepository;
->>>>>>> a463ba7e56bca5ae20e08420371ce7bc43429ed3:src/main/java/com/example/youcodeRecruitment/Service/HrService.java
     private final IMapperDto<HRDTO, HR> mapperDTO;
     private final IMapperDto<SaveHrRequest, HR> mapperSaveRequest;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -47,7 +38,7 @@ public class HrService {
         }
     }
 
-    public void updateHr(HrRequest hrRequest, Long id) {
+    public void updateHr(HRRequest hrRequest, Long id) {
         Optional<HR> hr = hrRepository.findById(id);
         if (hr.isPresent()) {
             hr.get().setFirstname(hrRequest.getFirstName());
