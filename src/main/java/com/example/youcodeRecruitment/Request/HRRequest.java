@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class HrRequest {
+public class HRRequest {
     @NotBlank(message = "firstName is required")
     private String firstName;
 

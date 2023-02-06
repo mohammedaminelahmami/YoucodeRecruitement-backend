@@ -79,7 +79,6 @@ public class CandidateService {
         Page<Candidate> pageHrs = candidateRepository.findAll(PageRequest.of(page, limit));
         List<CandidateDTO> hrdtos =  mapperDTO.convertListToListDto(pageHrs.getContent(), CandidateDTO.class);
         return new PaginatedDto<>(hrdtos, pageHrs.getTotalElements(), pageHrs.getTotalPages(), pageHrs.getNumber());
-
     }
 
     public List<CandidateDTO> searchByFirstNameLastNameSkills(String firstname, String lastname,String frontend, String backend, String db, String outil) {
@@ -88,5 +87,7 @@ public class CandidateService {
         List<CandidateDTO> candidateDTOS = mapperDTO.convertListToListDto(candidates,CandidateDTO.class);
         return candidateDTOS;
     }
+
+    
 }
 
