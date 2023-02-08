@@ -76,7 +76,7 @@ public class CommentService {
         if(page > 0) page--;
         Optional<Document> document = documentRepository.findById(id);
         if(document.isPresent()) {
-            List<Comment> comments = commentRepository.findAllByDocument(document.get(), PageRequest.of(page, limit)).getContent();
+            List<Comment> comments = commentRepository.findAllByDocument(document.get(), PageRequest.of(page, 1000)).getContent();
             return mapperDTO.convertListToListDto(comments, CommentDTO.class);
         }else{
             throw new RuntimeException("Document not found");
