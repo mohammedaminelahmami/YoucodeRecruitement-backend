@@ -10,6 +10,7 @@ import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +29,6 @@ public class SkillsService {
         return mapperSkillsDTO.convertToEntity(skills, SkillsDTO.class);
     }
 
-
-
     public void createSkills(SkillsRequest skillsRequest) {
         Skills skills = mapperSkills.convertToEntity(skillsRequest, Skills.class);
         if (skills != null) {
@@ -38,8 +37,20 @@ public class SkillsService {
             if (candidate == null) {
                 throw new RuntimeException("You don't have access to skills");
             }
-            skills.setCandidate(candidate);
-            skillsRepository.save(skills);
+            Optional<Skills> skills1 = skillsRepository.findByCandidate(candidate);
+            if(skills1.isPresent())
+            {
+                if(skills.getFrontend() != null && !skills.getFrontend().equals("")) skills1.get().setFrontend(skills1.get().getFrontend()+";"+skills.getFrontend());
+                if(skills.getBackend() != null && !skills.getBackend().equals("")) skills1.get().setBackend(skills1.get().getBackend()+";"+skills.getBackend());
+                if(skills.getOutil() != null && !skills.getOutil().equals("")) skills1.get().setOutil(skills1.get().getOutil()+";"+skills.getOutil());
+                if(skills.getDb() != null && !skills.getDb().equals("")) skills1.get().setDb(skills1.get().getDb()+";"+skills.getDb());
+                skills1.get().setCandidate(candidate);
+
+                skillsRepository.save(skills1.get());
+            }else{
+                skills.setCandidate(candidate);
+                skillsRepository.save(skills);
+            }
         } else {
             throw new RuntimeException("Skills is null");
         }
