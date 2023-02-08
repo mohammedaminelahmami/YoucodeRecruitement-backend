@@ -3,6 +3,7 @@ package com.example.youcodeRecruitment.Controller;
 import com.example.youcodeRecruitment.Request.SkillsRequest;
 import com.example.youcodeRecruitment.Service.SkillsService;
 import com.example.youcodeRecruitment.dto.SkillsDTO;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,16 +16,16 @@ public class SkillsController {
 
     private final SkillsService skillsService;
 
-    @PostMapping("")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody @Valid SkillsRequest skillsRequest) {
         skillsService.createSkills(skillsRequest);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public SkillsDTO getSkills(@PathVariable int id) {
-        return skillsService.getSkills(id);
+    public SkillsDTO getSkills() {
+        return skillsService.getSkills();
     }
 
     @PutMapping("/{id}")
@@ -33,13 +34,10 @@ public class SkillsController {
         skillsService.updateSkills(skillsRequest);
     }
 
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSkills(@PathVariable int id) {
-        skillsService.deleteSkillsById(id);
+    @PostMapping("/update-skills")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteSkills(@RequestParam("idSkill") String idSkill, @RequestParam("skill") String skill, @RequestParam("skillName") String skillName) {
+        skillsService.deleteSkillsById(Integer.parseInt(idSkill), skill, skillName);
     }
-
-
-
 
 }

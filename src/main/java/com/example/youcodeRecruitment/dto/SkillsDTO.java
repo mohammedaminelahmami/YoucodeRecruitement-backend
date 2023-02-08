@@ -6,9 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SkillsDTO {
-    private String frontend_skills;
-    private String backend_skills;
-    private String db_skills;
-    private String outil_skills;
+    private int id_skill;
+    private String frontend;
+    private String backend;
+    private String db;
+    private String outil;
     private CandidateDTO candidate;
 }

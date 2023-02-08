@@ -5,26 +5,27 @@ import com.example.youcodeRecruitment.Entity.Skills;
 import com.example.youcodeRecruitment.Repository.CandidateRepository;
 import com.example.youcodeRecruitment.Repository.SkillsRepository;
 import com.example.youcodeRecruitment.Request.SkillsRequest;
+import com.example.youcodeRecruitment.Request.SkillsRequestDeleteDTO;
 import com.example.youcodeRecruitment.dto.SkillsDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class SkillsService {
     private final SkillsRepository skillsRepository;
-    private final CandidateRepository candidateRepository;
     private final AuthService authService;
     private final IMapperDto<SkillsRequest, Skills> mapperSkills;
     private final IMapperDto<Skills, SkillsDTO> mapperSkillsDTO;
 
 
-    public SkillsDTO getSkills(int id) {
-        Skills skills = skillsRepository.findById(id).orElseThrow(()->
+    public SkillsDTO getSkills() {
+        Candidate candidate = authService.getAuthenticatedCandidate();
+        Skills skills = skillsRepository.findByCandidate(candidate).orElseThrow(()->
                 new RuntimeException("Skills not found"));
         return mapperSkillsDTO.convertToEntity(skills, SkillsDTO.class);
     }
@@ -68,10 +69,28 @@ public class SkillsService {
         }
     }
 
-    public void deleteSkillsById(int id) {
-        Optional<Skills> skills = skillsRepository.findById(id);
+    public void deleteSkillsById(int idSkill, String skill, String skillName) {
+        Optional<Skills> skills = skillsRepository.findById(idSkill);
         if (skills.isPresent()) {
-            skillsRepository.delete(skills.get());
+            switch (skillName) {
+                case "frontend" -> {
+                    String[] arr = Arrays.stream(skills.get().getFrontend().split(";")).filter((e) -> !e.equals(skill)).map(String::trim).toArray(String[]::new);
+                    skills.get().setFrontend(String.join(";", arr));
+                }
+                case "backend" -> {
+                    String[] arr = Arrays.stream(skills.get().getBackend().split(";")).filter((e) -> !e.equals(skill)).map(String::trim).toArray(String[]::new);
+                    skills.get().setBackend(String.join(";", arr));
+                }
+                case "outil" -> {
+                    String[] arr = Arrays.stream(skills.get().getOutil().split(";")).filter((e) -> !e.equals(skill)).map(String::trim).toArray(String[]::new);
+                    skills.get().setOutil(String.join(";", arr));
+                }
+                case "db" -> {
+                    String[] arr = Arrays.stream(skills.get().getDb().split(";")).filter((e) -> !e.equals(skill)).map(String::trim).toArray(String[]::new);
+                    skills.get().setDb(String.join(";", arr));
+                }
+            }
+            skillsRepository.save(skills.get());
         } else {
             throw new RuntimeException("Skills is null");
         }
