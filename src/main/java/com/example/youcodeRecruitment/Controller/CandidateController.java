@@ -1,6 +1,7 @@
 package com.example.youcodeRecruitment.Controller;
 
 import com.example.youcodeRecruitment.Request.CandidateRequest;
+import com.example.youcodeRecruitment.Service.AuthService;
 import com.example.youcodeRecruitment.Service.CandidateService;
 import com.example.youcodeRecruitment.Utils.PaginatedDto;
 import com.example.youcodeRecruitment.dto.CandidateDTO;
@@ -15,10 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @MultipartConfig
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class CandidateController {
     private final CandidateService candidateService;
+    private final AuthService authService;
 
+    // method get profile
+    @GetMapping("/candidate/profile")
+    @ResponseStatus(HttpStatus.OK)
+    public CandidateDTO getProfile() {
+        return authService.getProfile();
+    }
     // method update candidate
     @PutMapping("/candidate/{id}") // idCandidate
     @ResponseStatus(HttpStatus.ACCEPTED)

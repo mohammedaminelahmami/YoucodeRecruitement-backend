@@ -9,6 +9,9 @@ import com.example.youcodeRecruitment.Repository.HRRepository;
 import com.example.youcodeRecruitment.Request.AuthRequest;
 import com.example.youcodeRecruitment.Request.RegisterRequest;
 import com.example.youcodeRecruitment.Security.JwtUtils;
+import com.example.youcodeRecruitment.dto.AdminDTO;
+import com.example.youcodeRecruitment.dto.CandidateDTO;
+import com.example.youcodeRecruitment.dto.HRDTO;
 import com.example.youcodeRecruitment.dto.mapper.IMapperDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +36,10 @@ public class AuthService {
     private final IMapperDto<RegisterRequest, Admin> mapperDtoAdmin;
     private final IMapperDto<RegisterRequest, Candidate> mapperDtoCandidate;
     private final IMapperDto<RegisterRequest, HR> mapperDtoHR;
+
+    private final IMapperDto<CandidateDTO, Candidate> mapperCandidateDTO;
+    private final IMapperDto<HRDTO, HR> mapperHRDTO;
+    private final IMapperDto<AdminDTO, Admin> mapperAdminDTO;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -123,6 +130,22 @@ public class AuthService {
     public Admin getAuthenticatedAdmin() {
         return adminRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).orElse(null);
     }
+
+    public CandidateDTO getProfile() {
+        Candidate candidate = this.getAuthenticatedCandidate();
+        return mapperCandidateDTO.convertToDTO(candidate, CandidateDTO.class);
+    }
+
+    public HRDTO getProfileHR() {
+        HR hr = this.getAuthenticatedHR();
+        return mapperHRDTO.convertToDTO(hr, HRDTO.class);
+    }
+
+    public AdminDTO getProfileAdmin() {
+        Admin admin = this.getAuthenticatedAdmin();
+        return mapperAdminDTO.convertToDTO(admin, AdminDTO.class);
+    }
+
 
 
 }

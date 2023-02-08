@@ -23,24 +23,27 @@ public class DocumentService {
     private final UploadFileService uploadFileService;
 
     public void uploadDocument(MultipartFile file, String type) throws RuntimeException {
-        if(file == null) throw new RuntimeException("File not found");
+        if (file == null) throw new RuntimeException("File not found");
         // Save the file
-        String path = uploadFileService.getPath(file);
-        if(path == null || path.equals("")) throw new RuntimeException("File not found");
 
         Candidate candidate = authService.getAuthenticatedCandidate();
         if (candidate == null) throw new RuntimeException("Candidate not found");
 
+        String path = uploadFileService.getPath(file);
+        if (path == null || path.equals("")) throw new RuntimeException("File not found");
+
         Optional<Document> findDoc = documentRepository.findByCandidateAndType(candidate, type);
 
-        if(findDoc.isPresent())
-        {
+        if (findDoc.isPresent()) {
             findDoc.get().setPath(path);
             documentRepository.save(findDoc.get());
-        }else{
+        } else {
             Document document = new Document();
-
+            System.out.println("---------------------------------1 -----------------------------");
+            System.out.println(type);
+            System.out.println("---------------------------------2 -----------------------------");
             document.setType(type);
+            System.out.println("---------------------------------3 -----------------------------");
             document.setPath(path);
             document.setCandidate(candidate);
             documentRepository.save(document); // save the document
