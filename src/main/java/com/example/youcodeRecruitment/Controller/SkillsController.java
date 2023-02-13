@@ -3,7 +3,6 @@ package com.example.youcodeRecruitment.Controller;
 import com.example.youcodeRecruitment.Request.SkillsRequest;
 import com.example.youcodeRecruitment.Service.SkillsService;
 import com.example.youcodeRecruitment.dto.SkillsDTO;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
